@@ -31,17 +31,18 @@
             this.Panel = new System.Windows.Forms.Panel();
             this.RainButton = new System.Windows.Forms.Button();
             this.GroupBox = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.ColorButton = new System.Windows.Forms.Button();
-            this.MinSpeedTextBox = new System.Windows.Forms.TextBox();
             this.MaxSpeedTextBox = new System.Windows.Forms.TextBox();
+            this.MinSpeedTextBox = new System.Windows.Forms.TextBox();
+            this.ColorButton = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.ColorDialog = new System.Windows.Forms.ColorDialog();
             this.GroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // Panel
             // 
-            this.Panel.BackColor = System.Drawing.SystemColors.Window;
+            this.Panel.BackColor = System.Drawing.Color.White;
             this.Panel.Location = new System.Drawing.Point(1, -1);
             this.Panel.Name = "Panel";
             this.Panel.Size = new System.Drawing.Size(802, 305);
@@ -55,6 +56,7 @@
             this.RainButton.TabIndex = 0;
             this.RainButton.Text = "Дождь!";
             this.RainButton.UseVisualStyleBackColor = true;
+            this.RainButton.Click += new System.EventHandler(this.RainButton_Click);
             // 
             // GroupBox
             // 
@@ -71,14 +73,29 @@
             this.GroupBox.TabStop = false;
             this.GroupBox.Text = "Управление";
             // 
-            // label1
+            // MaxSpeedTextBox
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 38);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(232, 20);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Выбор цвета для произведения";
+            this.MaxSpeedTextBox.Location = new System.Drawing.Point(321, 75);
+            this.MaxSpeedTextBox.Name = "MaxSpeedTextBox";
+            this.MaxSpeedTextBox.Size = new System.Drawing.Size(65, 27);
+            this.MaxSpeedTextBox.TabIndex = 5;
+            // 
+            // MinSpeedTextBox
+            // 
+            this.MinSpeedTextBox.Location = new System.Drawing.Point(238, 75);
+            this.MinSpeedTextBox.Name = "MinSpeedTextBox";
+            this.MinSpeedTextBox.Size = new System.Drawing.Size(65, 27);
+            this.MinSpeedTextBox.TabIndex = 4;
+            // 
+            // ColorButton
+            // 
+            this.ColorButton.BackColor = System.Drawing.Color.Silver;
+            this.ColorButton.Location = new System.Drawing.Point(262, 26);
+            this.ColorButton.Name = "ColorButton";
+            this.ColorButton.Size = new System.Drawing.Size(41, 32);
+            this.ColorButton.TabIndex = 3;
+            this.ColorButton.UseVisualStyleBackColor = false;
+            this.ColorButton.Click += new System.EventHandler(this.ColorButton_Click);
             // 
             // label2
             // 
@@ -89,27 +106,14 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "Диапозон скорости капель";
             // 
-            // ColorButton
+            // label1
             // 
-            this.ColorButton.Location = new System.Drawing.Point(262, 26);
-            this.ColorButton.Name = "ColorButton";
-            this.ColorButton.Size = new System.Drawing.Size(41, 32);
-            this.ColorButton.TabIndex = 3;
-            this.ColorButton.UseVisualStyleBackColor = true;
-            // 
-            // MinSpeedTextBox
-            // 
-            this.MinSpeedTextBox.Location = new System.Drawing.Point(238, 75);
-            this.MinSpeedTextBox.Name = "MinSpeedTextBox";
-            this.MinSpeedTextBox.Size = new System.Drawing.Size(65, 27);
-            this.MinSpeedTextBox.TabIndex = 4;
-            // 
-            // MaxSpeedTextBox
-            // 
-            this.MaxSpeedTextBox.Location = new System.Drawing.Point(321, 75);
-            this.MaxSpeedTextBox.Name = "MaxSpeedTextBox";
-            this.MaxSpeedTextBox.Size = new System.Drawing.Size(65, 27);
-            this.MaxSpeedTextBox.TabIndex = 5;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 38);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(232, 20);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Выбор цвета для произведения";
             // 
             // Form1
             // 
@@ -136,5 +140,6 @@
         private Button ColorButton;
         private Label label2;
         private Label label1;
+        private ColorDialog ColorDialog;
     }
 }
