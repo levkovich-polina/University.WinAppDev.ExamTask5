@@ -43,7 +43,7 @@ namespace Task5
         int _positionX;
         SolidBrush _brush;
         List<int> _listPositionX = new List<int>();
-
+        int _reproduction;
         int _width;
         int _height;
         int _dx;
@@ -51,12 +51,17 @@ namespace Task5
         int _dy;
         int _dropX;
         int _dropY;
-
+        double _puddleHeight;
+        int Y;
         public Form1()
         {
             InitializeComponent();
             _brush = new SolidBrush(Color.Blue);
             ColorButton.BackColor = _brush.Color;
+            MinSpeedTextBox.Text = "20";
+            MaxSpeedTextBox.Text = "100";
+            _reproduction = 500;
+            _puddleHeight = _height;
         }
 
         private void RainButton_Click(object sender, EventArgs e)
@@ -64,6 +69,7 @@ namespace Task5
             Panel.CreateGraphics().Clear(Color.White);
             _listPositionX.Clear();
             _drops.Clear();
+            _count = 0;
             if (ColorButton.BackColor == Color.Silver)
             {
                 MessageBox.Show("Нужно выбрать цвет!");
@@ -83,15 +89,25 @@ namespace Task5
                 _radius = 35;
                 _dy = _height * 4;
                 TimerCallback tm = new TimerCallback(OnTimerTicked);
-                _timer = new Timer(tm, 0, 0, 500);
+                _timer = new Timer(tm, 0, 0, _reproduction);
             }
         }
 
         private void OnTimerTicked(object obj)
         {
+            double speedMax = Convert.ToDouble(MaxSpeedTextBox.Text);
+            double speedMin = Convert.ToDouble(MinSpeedTextBox.Text);
+            double randomSpeed = _random.Next((int)speedMin, (int)speedMax);
+            double difference = randomSpeed / 100.0;
+            _reproduction = (int)(20 / difference);
             _positionX = _random.Next(4, 28);
             _dropX = _width * _positionX;
             _dropY = _height * 11;
+            if (Math.Abs(Y - (Panel.ClientSize.Height - _puddleHeight)) <= 5)
+            {
+                _puddleHeight += 0.2;
+                _drops.Remove(_drops[0]);
+            }
             Drop drop = new Drop(_dropX - _radius, _dropY - _radius, 6, 10, _brush);
             _drops.Add(drop);
             for (int i = 0; i < _drops.Count; i++)
@@ -101,6 +117,7 @@ namespace Task5
             Draw();
 
         }
+        int _count = 0;
         private void Draw()
         {
             Graphics g = Panel.CreateGraphics();
@@ -118,15 +135,20 @@ namespace Task5
             for (int i = 0; i < _drops.Count; i++)
             {
                 var dx = _drops[i].PositionX;
-                var dy = _drops[i].PositionY;
+                 Y = _drops[i].PositionY;
                 var dWidth = _drops[i].Width;
                 var dHeight = _drops[i].Height;
                 var brush = _drops[i].Brush;
                 Invoke(() =>
                 {
-                    g.FillEllipse(new SolidBrush(Color.White), dx, dy - _height, dWidth, dHeight);
-                    g.FillEllipse(_brush, dx, dy, dWidth, dHeight);
+                    g.FillEllipse(new SolidBrush(Color.White), dx, Y - _height, dWidth, dHeight);
+                    g.FillEllipse(_brush, dx, Y, dWidth, dHeight);
                 });
+
+                if (Math.Abs(Y - (Panel.ClientSize.Height - _puddleHeight)) <= 5)
+                {
+                    g.FillRectangle(_brush, 0, (int)(_height * 31 - _puddleHeight), Panel.ClientSize.Width, (int)_puddleHeight);
+                }
             }
         }
 
