@@ -49,8 +49,8 @@ namespace Task5
         int _dx;
         int _radius;
         int _dy;
-        double _puddleHeight;
-        int Y;
+        double _puddleHeight = 0;
+
         public Form1()
         {
             InitializeComponent();
@@ -100,10 +100,14 @@ namespace Task5
             _positionX = _random.Next(4, 28);
             var dropX = _width * _positionX;
             var dropY = _height * 11;
-            if (Math.Abs(Y - (Panel.ClientSize.Height - _puddleHeight)) <= 5)
+            for (int i = 0; i < _drops.Count; i++)
             {
-                _puddleHeight += 0.2;
-                _drops.Remove(_drops[0]);
+                if (Math.Abs(_drops[i].PositionY - (Panel.ClientSize.Height - _puddleHeight)) <= 5)
+                {
+                    _puddleHeight += 0.2;
+                    _drops.Remove(_drops[0]);
+                }
+
             }
             Drop drop = new Drop(dropX - _radius, dropY - _radius, 6, 10, _brush);
             _drops.Add(drop);
@@ -131,20 +135,17 @@ namespace Task5
             for (int i = 0; i < _drops.Count; i++)
             {
                 var dx = _drops[i].PositionX;
-                Y = _drops[i].PositionY;
+                var dy = _drops[i].PositionY;
                 var dWidth = _drops[i].Width;
                 var dHeight = _drops[i].Height;
                 var brush = _drops[i].Brush;
                 Invoke(() =>
                 {
-                    g.FillEllipse(new SolidBrush(Color.White), dx, Y - _height, dWidth, dHeight);
-                    g.FillEllipse(_brush, dx, Y, dWidth, dHeight);
+                    g.FillEllipse(new SolidBrush(Color.White), dx, dy - _height, dWidth, dHeight);
+                    g.FillEllipse(_brush, dx, dy, dWidth, dHeight);
                 });
+                g.FillRectangle(_brush, 0, (int)(Panel.ClientSize.Height - _puddleHeight), Panel.ClientSize.Width, (int)_puddleHeight);
 
-                if (Math.Abs(Y - (Panel.ClientSize.Height - _puddleHeight)) <= 5)
-                {
-                    g.FillRectangle(_brush, 0, (int)(_height * 31 - _puddleHeight), Panel.ClientSize.Width, (int)_puddleHeight);
-                }
             }
         }
 
