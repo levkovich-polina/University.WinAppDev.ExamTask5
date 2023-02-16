@@ -105,7 +105,7 @@ namespace Task5
                 if (Math.Abs(_drops[i].PositionY - (Panel.ClientSize.Height - _puddleHeight)) <= 5)
                 {
                     _puddleHeight += 0.2;
-                    _drops.Remove(_drops[0]);
+                    _drops.Remove(_drops[i]);
                 }
 
             }
@@ -144,9 +144,10 @@ namespace Task5
                     g.FillEllipse(new SolidBrush(Color.White), dx, dy - _height, dWidth, dHeight);
                     g.FillEllipse(_brush, dx, dy, dWidth, dHeight);
                 });
-                g.FillRectangle(_brush, 0, (int)(Panel.ClientSize.Height - _puddleHeight), Panel.ClientSize.Width, (int)_puddleHeight);
-
             }
+            g.FillRectangle(_brush, 0, (int)(Panel.ClientSize.Height - _puddleHeight), Panel.ClientSize.Width, (int)_puddleHeight);
+
+
         }
 
         private void ColorButton_Click(object sender, EventArgs e)
