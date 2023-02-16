@@ -49,8 +49,6 @@ namespace Task5
         int _dx;
         int _radius;
         int _dy;
-        int _dropX;
-        int _dropY;
         double _puddleHeight;
         int Y;
         public Form1()
@@ -69,7 +67,6 @@ namespace Task5
             Panel.CreateGraphics().Clear(Color.White);
             _listPositionX.Clear();
             _drops.Clear();
-            _count = 0;
             if (ColorButton.BackColor == Color.Silver)
             {
                 MessageBox.Show("Нужно выбрать цвет!");
@@ -101,14 +98,14 @@ namespace Task5
             double difference = randomSpeed / 100.0;
             _reproduction = (int)(20 / difference);
             _positionX = _random.Next(4, 28);
-            _dropX = _width * _positionX;
-            _dropY = _height * 11;
+            var dropX = _width * _positionX;
+            var dropY = _height * 11;
             if (Math.Abs(Y - (Panel.ClientSize.Height - _puddleHeight)) <= 5)
             {
                 _puddleHeight += 0.2;
                 _drops.Remove(_drops[0]);
             }
-            Drop drop = new Drop(_dropX - _radius, _dropY - _radius, 6, 10, _brush);
+            Drop drop = new Drop(dropX - _radius, dropY - _radius, 6, 10, _brush);
             _drops.Add(drop);
             for (int i = 0; i < _drops.Count; i++)
             {
@@ -117,7 +114,6 @@ namespace Task5
             Draw();
 
         }
-        int _count = 0;
         private void Draw()
         {
             Graphics g = Panel.CreateGraphics();
@@ -135,7 +131,7 @@ namespace Task5
             for (int i = 0; i < _drops.Count; i++)
             {
                 var dx = _drops[i].PositionX;
-                 Y = _drops[i].PositionY;
+                Y = _drops[i].PositionY;
                 var dWidth = _drops[i].Width;
                 var dHeight = _drops[i].Height;
                 var brush = _drops[i].Brush;
